@@ -1,0 +1,5 @@
+export const GET_SHOW = 'GET_SHOW'
+export const GET_ONE_SHOW = 'GET_ONE_SHOW'
+export const ADD_SHOW = 'ADD_SHOW'
+export const UPDATE_SHOW = 'UPDATE_SHOW'
+export const DELETE_SHOW = 'DELETE_SHOW'
