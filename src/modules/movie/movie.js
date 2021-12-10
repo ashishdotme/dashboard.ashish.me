@@ -33,8 +33,8 @@ const Movies = () => {
           </div>
         </section>
         <div className="section has-background-light p-5">
-          <div classname="columns">
-            <div classname="column is-one-third">
+          <div className="columns">
+            <div className="column is-one-third">
               <MovieGrid items={movies} />
             </div>
           </div>

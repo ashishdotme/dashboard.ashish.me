@@ -33,7 +33,7 @@ const Books = () => {
       <div className="custom-container">
         <section className="hero is-link">
           <div className="hero-body">
-            <p className="title">Moviess</p>
+            <p className="title">Books</p>
             <p className="subtitle">find all books here</p>
           </div>
         </section>

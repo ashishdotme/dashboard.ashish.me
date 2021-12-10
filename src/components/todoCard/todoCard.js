@@ -1,6 +1,6 @@
 import CustomLink from '../custom-link/CustomLink'
 
-const ShowCard = ({ item }) => {
+const TodoCard = ({ item }) => {
   return (
     <>
       <div className="card">
@@ -19,4 +19,4 @@ const ShowCard = ({ item }) => {
   )
 }
 
-export default ShowCard
+export default TodoCard

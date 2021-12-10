@@ -1,63 +1,47 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { MutableRefObject, useMemo, useRef } from 'react'
-import { useParams } from 'react-router'
-import 'react-big-calendar/lib/sass/styles.scss'
-import { addWeeks, format, getDay, parse, set, startOfWeek } from 'date-fns'
-import { enUS } from 'date-fns/locale'
-import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import { fetchTodos, selectAllTodos } from '../../slices/todosSlice'
+import TodoCard from '../../components/todoCard/todoCard'
 
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  locales: { 'en-US': enUS },
-})
+const TodoGrid = ({ items }) => {
+  return (
+    <div className="columns is-7 is-multiline">
+      {items.map((item, index) => {
+        return <TodoCard item={item} key={index} />
+      })}
+    </div>
+  )
+}
 
-const Todo = () => {
+const Todos = () => {
   const dispatch = useDispatch()
-  const events = useSelector(selectAllTodos)
-  console.log(events)
+  const todos = useSelector(selectAllTodos)
   const status = useSelector((state) => state.todos.status)
   useEffect(() => {
     if (status === 'not_loaded') {
       dispatch(fetchTodos())
     }
   }, [dispatch, status])
-  const today = useMemo(() => new Date(), [])
-  const [maxHour, setMaxHour] = useState(20)
-  const lectureEvents = events.map((item) => {
-    const session = {}
-    session.start = new Date(item.start)
-    session.end = new Date(item.end)
-    session.title = item.name
-    session.type = item.type
-    return session
-  })
   return (
-    <div className="container custom-container">
-      <div className="content pt-4">
-        <div className="title is-size-2">About MSc Cloud Computing</div>
-        <div className="subtitle">National College of Ireland</div>
-        <hr />
-        {lectureEvents.length > 0 && (
-          <Calendar
-            localizer={localizer}
-            events={lectureEvents}
-            min={set(today, { hours: 8, minutes: 0 })}
-            max={set(today, { hours: maxHour, minutes: 0 })}
-            defaultView="work_week"
-            views={['work_week']}
-            dayLayoutAlgorithm="no-overlap"
-          />
-        )}
-        <hr />
+    <>
+      <div className="custom-container">
+        <section className="hero is-link">
+          <div className="hero-body">
+            <p className="title">Todoss</p>
+            <p className="subtitle">find all todos here</p>
+          </div>
+        </section>
+        <div className="section has-background-light p-5">
+          <div className="columns">
+            <div className="column is-one-third">
+              <TodoGrid items={todos} />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
-export default Todo
+export default Todos
