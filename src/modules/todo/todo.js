@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
+import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { fetchTodos, selectAllTodos } from '../../slices/todosSlice'
+import { fetchTodos, selectAllTodos, saveTodo } from '../../slices/todosSlice'
 import TodoCard from '../../components/todoCard/todoCard'
 import ReactPaginate from 'react-paginate'
+import Form from './form'
 
-const TodoGrid = ({ items }) => {
+const TodoGrid = ({ completedTodos }) => {
   return (
     <>
-      {items &&
-        items.map((item, index) => {
+      {completedTodos &&
+        completedTodos.map((item, index) => {
           return <TodoCard item={item} key={index} />
         })}
     </>
@@ -18,7 +20,9 @@ const TodoGrid = ({ items }) => {
 
 const Todos = () => {
   const dispatch = useDispatch()
-  const items = useSelector(selectAllTodos)
+  const todos = useSelector(selectAllTodos)
+  const currentTodos = todos.filter((x) => !x.completedDate)
+  const completedTodos = todos.filter((x) => x.completedDate)
   let itemsPerPage = 6
   const status = useSelector((state) => state.todos.status)
   const [currentItems, setCurrentItems] = useState(null)
@@ -26,17 +30,32 @@ const Todos = () => {
   const [itemOffset, setItemOffset] = useState(0)
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length
+    const newOffset = (event.selected * itemsPerPage) % completedTodos.length
     console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`)
     setItemOffset(newOffset)
   }
+
+  const loadCommitHistory = async (event, inputValue) => {
+    event.preventDefault()
+    if (inputValue !== '') {
+      dispatch(
+        saveTodo({
+          content: inputValue,
+        }),
+      )
+    }
+  }
+
   useEffect(() => {
-    dispatch(fetchTodos())
+    if (status === 'not_loaded') {
+      dispatch(fetchTodos())
+    }
     const endOffset = itemOffset + itemsPerPage
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`)
-    setCurrentItems(items.slice(itemOffset, endOffset))
-    setPageCount(Math.ceil(items.length / itemsPerPage))
+    console.log(`Loading completedTodos from ${itemOffset} to ${endOffset}`)
+    setCurrentItems(completedTodos.slice(itemOffset, endOffset))
+    setPageCount(Math.ceil(completedTodos.length / itemsPerPage))
   }, [dispatch, status, itemOffset, itemsPerPage])
+
   return (
     <>
       <div className="custom-container">
@@ -48,13 +67,25 @@ const Todos = () => {
         </section>
         <div className="section has-background-light p-5">
           <div className="container">
+            <Form addTodo={(event, inputValue) => loadCommitHistory(event, inputValue)} />
+            <div className="box" id="messages" data-example>
+              <h1 className="title is-4 mb-2"> Todos</h1>
+
+              <div className="list has-hoverable-list-completedTodos has-overflow-ellipsis">
+                {currentTodos && currentTodos.length > 0 && (
+                  <>
+                    <TodoGrid completedTodos={currentTodos} />
+                  </>
+                )}
+              </div>
+            </div>
             <div className="box" id="messages" data-example>
               <h1 className="title is-4 mb-2">Completed Todos</h1>
 
-              <div className="list has-hoverable-list-items has-overflow-ellipsis">
-                {items && items.length > 0 && (
+              <div className="list has-hoverable-list-completedTodos has-overflow-ellipsis">
+                {completedTodos && completedTodos.length > 0 && (
                   <>
-                    <TodoGrid items={currentItems} />
+                    <TodoGrid completedTodos={currentItems} />
                   </>
                 )}
               </div>
