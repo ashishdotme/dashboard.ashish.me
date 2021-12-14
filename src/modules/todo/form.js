@@ -7,6 +7,7 @@ const Form = (props) => {
   }
 
   const handleSubmit = (event) => {
+    event.preventDefault()
     props.addTodo(event, inputValue)
     setInputValue('')
   }

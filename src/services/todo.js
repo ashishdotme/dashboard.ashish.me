@@ -54,3 +54,14 @@ export const httpPut = (id, a) => {
       throw e
     })
 }
+
+export const exportData = (a) => {
+  return api()
+    .post('/download/excel', a)
+    .then((res) => {
+      return res.data || {}
+    })
+    .catch((e) => {
+      throw e
+    })
+}

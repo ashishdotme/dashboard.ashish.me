@@ -3,8 +3,10 @@ import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { fetchTodos, selectAllTodos, saveTodo } from '../../slices/todosSlice'
+import { exportData } from '../../services/todo'
 import TodoCard from '../../components/todoCard/todoCard'
 import ReactPaginate from 'react-paginate'
+import { useAuth0 } from '@auth0/auth0-react'
 import Form from './form'
 
 const TodoGrid = ({ completedTodos }) => {
@@ -56,6 +58,25 @@ const Todos = () => {
     setPageCount(Math.ceil(completedTodos.length / itemsPerPage))
   }, [dispatch, status, itemOffset, itemsPerPage])
 
+  const [inputValue, setInputValue] = useState('')
+  const handleChange = (event) => {
+    setInputValue(event.target.value)
+  }
+
+  const handleSubmit = async (event) => {
+    //props.addTodo(event, inputValue)
+    event.preventDefault()
+    exportData({ email: inputValue })
+    setInputValue('')
+  }
+
+  const { user } = useAuth0()
+  let isAdmin = false
+  if (user && user['https://ncirl.me/role']) {
+    const roles = user['https://ncirl.me/role']
+    const isAdminRolePresent = roles.find((x) => x === 'Admin')
+    isAdmin = isAdminRolePresent ? true : false
+  }
   return (
     <>
       <div className="custom-container">
@@ -67,7 +88,29 @@ const Todos = () => {
         </section>
         <div className="section has-background-light p-5">
           <div className="container">
-            <Form addTodo={(event, inputValue) => loadCommitHistory(event, inputValue)} />
+            {isAdmin && (
+              <>
+                <Form addTodo={(event, inputValue) => loadCommitHistory(event, inputValue)} />
+                <form className="box" onSubmit={(event) => handleSubmit(event)}>
+                  <label className="label is-large">Export excel</label>
+                  <div className="field has-addons">
+                    <div className="control">
+                      <input
+                        name="title"
+                        type="text"
+                        className="input"
+                        placeholder="What's your email?"
+                        onChange={handleChange}
+                        value={inputValue}
+                      />
+                    </div>
+                    <div className="control">
+                      <input type="submit" value="Add" className="button is-info" />
+                    </div>
+                  </div>
+                </form>
+              </>
+            )}
             <div className="box" id="messages" data-example>
               <h1 className="title is-4 mb-2"> Todos</h1>
 
