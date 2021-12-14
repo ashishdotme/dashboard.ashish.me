@@ -10,7 +10,7 @@ import store from './slices/store'
 ReactDOM.render(
   <Auth0Provider
     domain="ashish-prod.us.auth0.com"
-    audience="systemapi.prod.ashish.me"
+    audience="systemapi.ashish.me"
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
     scope="openid profile email manage:admin"

@@ -3,14 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { fetchShows, selectAllShows } from '../../slices/showsSlice'
 import ShowCard from '../../components/showCard/showCard'
+import FilterComponent from '../../components/common/filterComponent'
 
 const ShowGrid = ({ items }) => {
   return (
-    <div className="columns is-7 is-multiline">
+    <>
       {items.map((item, index) => {
         return <ShowCard item={item} key={index} />
       })}
-    </div>
+    </>
   )
 }
 
@@ -26,17 +27,15 @@ const Shows = () => {
   return (
     <>
       <div className="custom-container">
-        <section className="hero is-link">
+        <section className="hero is-info">
           <div className="hero-body">
             <p className="title">Shows</p>
             <p className="subtitle">find all shows here</p>
           </div>
         </section>
         <div className="section has-background-light p-5">
-          <div className="columns">
-            <div className="column is-one-third">
-              <ShowGrid items={shows} />
-            </div>
+          <div className="columns is-multiline">
+            <ShowGrid items={shows} />
           </div>
         </div>
       </div>

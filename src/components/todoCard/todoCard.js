@@ -1,21 +1,20 @@
-import CustomLink from '../custom-link/CustomLink'
+import dayjs from 'dayjs'
 
 const TodoCard = ({ item }) => {
   return (
-    <>
-      <div className="card">
-        <div className="card-name">
-          <div className="card-content">
-            <div className="media">
-              <div className="media-content">
-                <p className="title is-4">{item.title}</p>
-              </div>
-            </div>
-            <div className="content">{item.description}</div>
-          </div>
+    <div className="list-item">
+      <div className="list-item-content">
+        <div className="list-item-title is-flex is-justify-content-space-between">
+          <span>{item.content}</span>
+          <span className="has-text-weight-normal has-text-grey">
+            {' '}
+            Completed on&nbsp;
+            {item.completedDate && dayjs(item.completedDate).format('DD/MM/YYYY')}
+          </span>
         </div>
+        <div className="list-item-description">{dayjs(item.dueDate).format('DD/MM/YYYY')} </div>
       </div>
-    </>
+    </div>
   )
 }
 

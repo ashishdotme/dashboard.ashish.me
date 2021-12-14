@@ -39,83 +39,73 @@ const Navbar = () => {
     }
   }, [isAuthenticated, getAccessTokenSilently, dispatch])
   return (
-    <nav className="navbar is-warning is-fixed-top" role="navigation" aria-label="main navigation">
-      <div className="navbar-brand">
-        <Link className="navbar-item has-text-info-dark" to="/">
-          <i className="fas fa-blog"></i>
-          <span>NCI</span>
-        </Link>
+    <>
+      <nav className="navbar is-info is-fixed-top" role="navigation" aria-label="main navigation">
+        <div className="navbar-brand">
+          <Link to={'/'} className="navbar-item">
+            Home
+          </Link>
 
-        <Burger active={isActive} setIsActive={setIsActice} />
-      </div>
+          <Burger active={isActive} setIsActive={setIsActice} />
+        </div>
+        <div className={`navbar-menu ${isActive ? 'is-active' : ''}`} id="navbarMenuMain">
+          <div className="navbar-start">
+            <Link to={'/shows'} className="navbar-item">
+              Shows
+            </Link>
+            <Link to={'/books'} className="navbar-item">
+              Books
+            </Link>
+            <Link to={'/movies'} className="navbar-item">
+              Movies
+            </Link>
+          </div>
 
-      <div className={`navbar-menu ${isActive ? 'is-active' : ''}`} id="navbarMenuMain">
-        <div className="navbar-start">
-          <div className="navbar-item has-dropdown is-hoverable">
-            <div className="navbar-link">Course</div>
+          <div className="navbar-end">
+            {!isAuthenticated && (
+              <a className="navbar-item" onClick={() => loginWithRedirect()}>
+                Login
+              </a>
+            )}
+            {isAuthenticated && (
+              <div className="navbar-item has-dropdown is-hoverable">
+                <div className="navbar-link">Admin</div>
 
-            <div className="navbar-dropdown">
-              <Link to="/cloud" className="navbar-item">
-                Cloud Architecture
-              </Link>
-              <Link to="/post?m=popular" className="navbar-item">
-                Cloud Devops
-              </Link>
-              <Link to="/post?m=popular" className="navbar-item">
-                Blockchain
-              </Link>
-              <Link to="/post?m=popular" className="navbar-item">
-                Cloud Platform Programming
-              </Link>
-              <hr className="navbar-divider" />
-              <Link to="/post/search" className="navbar-item">
-                Help
-              </Link>
-            </div>
+                <div className="navbar-dropdown">
+                  {isAdmin && (
+                    <>
+                      <Link to="/admin/course" className="navbar-item">
+                        Course
+                      </Link>
+                      <Link to="/post?m=popular" className="navbar-item">
+                        Links
+                      </Link>
+                      <Link to="/post?m=popular" className="navbar-item">
+                        News
+                      </Link>
+                      <Link to="/post/search" className="navbar-item">
+                        Videos
+                      </Link>
+                    </>
+                  )}
+                  <Link to="/post?m=popular" className="navbar-item">
+                    Students
+                  </Link>
+                </div>
+              </div>
+            )}
+            {isAuthenticated && (
+              <a
+                className="navbar-item"
+                onClick={() => logout({ returnTo: window.location.origin })}
+              >
+                Logout
+              </a>
+            )}
           </div>
         </div>
-
-        <div className="navbar-end">
-          {!isAuthenticated && (
-            <a className="navbar-item" onClick={() => loginWithRedirect()}>
-              Login
-            </a>
-          )}
-          {isAuthenticated && (
-            <div className="navbar-item has-dropdown is-hoverable">
-              <div className="navbar-link">Admin</div>
-
-              <div className="navbar-dropdown">
-                {isAdmin && (
-                  <>
-                    <Link to="/admin/course" className="navbar-item">
-                      Course
-                    </Link>
-                    <Link to="/post?m=popular" className="navbar-item">
-                      Links
-                    </Link>
-                    <Link to="/post?m=popular" className="navbar-item">
-                      Movie
-                    </Link>
-                    <Link to="/post/search" className="navbar-item">
-                      Books
-                    </Link>
-                  </>
-                )}
-                <Link to="/post?m=popular" className="navbar-item">
-                  Shows
-                </Link>
-              </div>
-            </div>
-          )}
-          {isAuthenticated && (
-            <a className="navbar-item" onClick={() => logout({ returnTo: window.location.origin })}>
-              Logout
-            </a>
-          )}
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   )
 }
 

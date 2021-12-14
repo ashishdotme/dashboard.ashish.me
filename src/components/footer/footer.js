@@ -5,8 +5,7 @@ const Footer = () => {
     <footer className="footer px-4">
       <div className="content has-text-centered">
         <p>
-          <strong>Cloud DevOps</strong> project by{' '}
-          <strong>Ashish Patel, Shounak Bhandekar, Shubham Tendulkar</strong>
+          <strong>Cloud Platform Programming</strong> project by <strong>Ashish Patel</strong>
         </p>
       </div>
     </footer>

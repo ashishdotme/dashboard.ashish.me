@@ -14,18 +14,10 @@ const IndexPage = () => {
       dispatch(fetchCourses())
     }
   }, [dispatch, status])
-  const bloggersData = {
-    data: [
-      { id: 1, title: 'Cloud Architecture', subtitle: 'MSc Cloud Computing' },
-      { id: 2, title: 'Cloud Platform Programming', subtitle: 'MSc Cloud Computing' },
-      { id: 3, title: 'Cloud DevOpsSec', subtitle: 'MSc Cloud Computing' },
-      { id: 4, title: 'Blockchain', subtitle: 'MSc Cloud Computing' },
-    ],
-  }
 
   return (
     <div className="custom-container">
-      <section className="hero is-link">
+      <section className="hero is-info">
         <div className="hero-body">
           <p className="title">Courses</p>
           <p className="subtitle">Find all courses here</p>

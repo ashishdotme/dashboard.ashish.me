@@ -2,20 +2,15 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { fetchBooks, selectAllBooks } from '../../slices/booksSlice'
-import ReactPlayer from 'react-player/lazy'
+import BookCard from '../../components/bookCard/bookCard'
 
 const BooksGrid = ({ items }) => {
   return (
-    <div className="columns is-mobile is-multiline is-centered">
+    <>
       {items.map((item, index) => {
-        return (
-          <div key={index} className="column is-narrow">
-            {' '}
-            <ReactPlayer url={item.url} />{' '}
-          </div>
-        )
+        return <BookCard item={item} key={index} />
       })}
-    </div>
+    </>
   )
 }
 
@@ -31,14 +26,16 @@ const Books = () => {
   return (
     <>
       <div className="custom-container">
-        <section className="hero is-link">
+        <section className="hero is-info">
           <div className="hero-body">
             <p className="title">Books</p>
             <p className="subtitle">find all books here</p>
           </div>
         </section>
         <div className="section has-background-light p-5">
-          <BooksGrid items={books} />
+          <div className="columns is-multiline">
+            <BooksGrid items={books} />
+          </div>
         </div>
       </div>
     </>

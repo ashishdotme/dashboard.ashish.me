@@ -2,7 +2,7 @@ import CustomLink from '../custom-link/CustomLink'
 
 const ShowCard = ({ item }) => {
   return (
-    <>
+    <div className="column is-one-third">
       <div className="card">
         <div className="card-name">
           <div className="card-content">
@@ -15,7 +15,7 @@ const ShowCard = ({ item }) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

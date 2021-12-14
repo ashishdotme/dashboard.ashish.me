@@ -1,6 +1,6 @@
 import CustomLink from '../custom-link/CustomLink'
 
-const MovieCard = ({ item }) => {
+const BookCard = ({ item }) => {
   return (
     <div className="column is-one-third">
       <div className="card">
@@ -19,4 +19,4 @@ const MovieCard = ({ item }) => {
   )
 }
 
-export default MovieCard
+export default BookCard
