@@ -14,7 +14,7 @@ ReactDOM.render(
     redirectUri={window.location.origin}
     cacheLocation="localstorage"
     scope="openid profile email manage:admin"
-    clientId="PYzMJ2JiCVBpIQU9P00QyI1TyHWwBnv8"
+    clientId="JUFVd6bj3SQCpXfIjbsMilfyAMS9lagB"
   >
     <Provider store={store}>
       <App />
