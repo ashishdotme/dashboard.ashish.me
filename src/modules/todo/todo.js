@@ -119,8 +119,8 @@ const Todos = () => {
       dispatch(fetchTodos())
       dispatch(fetchStats())
       dispatch(fetchTimetables())
+      getRecommendations()
     }
-    getRecommendations()
     const endOffset = itemOffset + itemsPerPage
     console.log(`Loading completedTodos from ${itemOffset} to ${endOffset}`)
     setCurrentItems(completedTodos.slice(itemOffset, endOffset))
