@@ -43,7 +43,7 @@ const Todos = () => {
   const [currentItems, setCurrentItems] = useState(null)
   const [pageCount, setPageCount] = useState(0)
   const [itemOffset, setItemOffset] = useState(0)
-  const [recommendations, setRecommendations] = useState({})
+  const [recommendations, setRecommendations] = useState({ recommendedMovies: [] })
 
   const formatChartData = (initialData) => {
     let data1 = []
@@ -119,6 +119,8 @@ const Todos = () => {
       dispatch(fetchTodos())
       dispatch(fetchStats())
       dispatch(fetchTimetables())
+    }
+    if (recommendations.recommendedMovies && recommendations.recommendedMovies.length == 0) {
       getRecommendations()
     }
     const endOffset = itemOffset + itemsPerPage
