@@ -65,7 +65,7 @@ const Timetable = () => {
     <div className="custom-container">
       <section className="main-hero hero is-info">
         <div className="hero-body">
-          <p className="title">Courses</p>
+          <p className="title">Calendar</p>
           <p className="subtitle">dashboard.ashish.me</p>
         </div>
       </section>
