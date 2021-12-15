@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { httpDelete, httpGet, httpPost, httpPut, httpGetOne } from '../services/todo'
+import { httpDelete, httpGet, httpPost, httpPut, httpGetOne, httpGetStats } from '../services/todo'
 
 //Entity adapter
 const todoAdapter = createEntityAdapter()
@@ -8,6 +8,10 @@ const todoAdapter = createEntityAdapter()
 export const fetchTodos = createAsyncThunk('database/fetchTodos', async () => {
   return await httpGet()
 })
+export const fetchStats = createAsyncThunk('database/fetchStats', async () => {
+  return await httpGetStats()
+})
+
 export const getTodo = createAsyncThunk('database/getTodo', async (id) => {
   return await httpGetOne(id)
 })
@@ -27,6 +31,7 @@ const todoSlice = createSlice({
   name: 'todos',
   initialState: todoAdapter.getInitialState({
     todo: {},
+    stats: {},
     status: 'not_loaded',
     error: null,
   }),
@@ -34,6 +39,10 @@ const todoSlice = createSlice({
   extraReducers: {
     [fetchTodos.fulfilled]: (state, { payload }) => {
       todoAdapter.setAll(state, payload)
+      state.status = 'ready'
+    },
+    [fetchStats.fulfilled]: (state, { payload }) => {
+      state.stats = payload
       state.status = 'ready'
     },
     [getTodo.fulfilled]: (state, { payload }) => {
@@ -61,6 +70,9 @@ const todoSlice = createSlice({
     [fetchTodos.rejected]: (state) => {
       state.status = 'failed'
     },
+    [fetchStats.rejected]: (state) => {
+      state.status = 'failed'
+    },
     [getTodo.rejected]: (state) => {
       state.status = 'failed'
     },
@@ -70,7 +82,7 @@ const todoSlice = createSlice({
     [updateTodo.rejected]: (state) => {
       state.status = 'failed'
     },
-    [fetchTodos.pending]: (state) => {
+    [fetchStats.pending]: (state) => {
       state.status = 'loading'
     },
     [getTodo.pending]: (state) => {
@@ -90,3 +102,4 @@ export const activeTodo = (state) => state.todo
 export const { selectAll: selectAllTodos, selectById: selectTodosById } = todoAdapter.getSelectors(
   (state) => state.todos,
 )
+export const selectAllStats = todoAdapter.getSelectors((state) => state.stats)

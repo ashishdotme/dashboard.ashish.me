@@ -1,4 +1,5 @@
 export const GET_TODO = 'GET_TODO'
+export const GET_TODO_STATS = 'GET_TODO_STATS'
 export const GET_ONE_TODO = 'GET_ONE_TODO'
 export const ADD_TODO = 'ADD_TODO'
 export const UPDATE_TODO = 'UPDATE_TODO'

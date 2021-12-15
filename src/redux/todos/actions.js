@@ -6,6 +6,11 @@ const getTodos = (todos) => ({
   payload: todos,
 })
 
+const getTodoStats = (stats) => ({
+  type: types.GET_TODO_STATS,
+  payload: stats,
+})
+
 const getTodo = (todo) => ({
   type: types.GET_ONE_TODO,
   payload: todo,

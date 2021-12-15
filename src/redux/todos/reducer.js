@@ -3,11 +3,18 @@ import * as types from './actionType'
 const initialState = {
   todos: [],
   todo: {},
+  stats: {},
   loading: true,
 }
 
 const todoReducers = (state = initialState, action) => {
   switch (action.type) {
+    case types.GET_TODO_STATS:
+      return {
+        ...state,
+        stats: action.payload,
+        loading: false,
+      }
     case types.GET_TODOS:
       return {
         ...state,

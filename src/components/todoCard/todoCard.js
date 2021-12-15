@@ -3,7 +3,7 @@ import axios from 'axios'
 import { fetchTodos } from '../../slices/todosSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
-const TodoCard = ({ item }) => {
+const TodoCard = ({ item, isAdmin }) => {
   const dispatch = useDispatch()
   return (
     <div className="list-item">
@@ -11,18 +11,20 @@ const TodoCard = ({ item }) => {
         <div className="list-item-title is-flex is-justify-content-space-between">
           <span>
             <label className="checkbox mr-3">
-              <input
-                type="checkbox"
-                checked={item.completed}
-                onChange={async () => {
-                  if (!item.completed) {
-                    await axios.post(
-                      `https://systemapi.ashish.me/todos/${item.id}/completed/${item.todoId}`,
-                    )
-                    dispatch(fetchTodos())
-                  }
-                }}
-              />
+              {isAdmin && (
+                <input
+                  type="checkbox"
+                  checked={item.completed}
+                  onChange={async () => {
+                    if (!item.completed) {
+                      await axios.post(
+                        `https://systemapi.prod.ashish.me/todos/${item.id}/completed/${item.todoId}`,
+                      )
+                      dispatch(fetchTodos())
+                    }
+                  }}
+                />
+              )}
             </label>
             {item.content}
           </span>

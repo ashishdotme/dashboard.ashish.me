@@ -65,3 +65,14 @@ export const exportData = (a) => {
       throw e
     })
 }
+
+export const httpGetStats = () => {
+  return api()
+    .get('/stats')
+    .then((res) => {
+      return res.data || []
+    })
+    .catch((e) => {
+      throw e
+    })
+}

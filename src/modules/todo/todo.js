@@ -1,20 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, userSelector } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { fetchTodos, selectAllTodos, saveTodo } from '../../slices/todosSlice'
+import {
+  fetchTodos,
+  selectAllTodos,
+  saveTodo,
+  fetchStats,
+  selectAllStats,
+} from '../../slices/todosSlice'
 import { exportData } from '../../services/todo'
 import TodoCard from '../../components/todoCard/todoCard'
+import { Line, Bar } from 'react-chartjs-2'
+import { Chart as ChartJS } from 'chart.js/auto'
+import { Chart } from 'react-chartjs-2'
 import ReactPaginate from 'react-paginate'
 import { useAuth0 } from '@auth0/auth0-react'
 import Form from './form'
 
-const TodoGrid = ({ completedTodos }) => {
+const TodoGrid = ({ completedTodos, isAdmin }) => {
   return (
     <>
       {completedTodos &&
         completedTodos.map((item, index) => {
-          return <TodoCard item={item} key={index} />
+          return <TodoCard item={item} key={index} isAdmin={isAdmin} />
         })}
     </>
   )
@@ -23,6 +32,7 @@ const TodoGrid = ({ completedTodos }) => {
 const Todos = () => {
   const dispatch = useDispatch()
   const todos = useSelector(selectAllTodos)
+  const chartData = useSelector((state) => state.todos.stats)
   const currentTodos = todos.filter((x) => !x.completedDate)
   const completedTodos = todos.filter((x) => x.completedDate)
   let itemsPerPage = 6
@@ -30,6 +40,101 @@ const Todos = () => {
   const [currentItems, setCurrentItems] = useState(null)
   const [pageCount, setPageCount] = useState(0)
   const [itemOffset, setItemOffset] = useState(0)
+  const [timeData, setTimeData] = useState({})
+
+  const initChartData = async () => {
+    // Permet de recuperer les donnees pour construire le graphique
+    const res = await axios.get('http://localhost:8000/todos/stats')
+    // TODO: Trouver pourquoi il faut utiliser JSON.parse sur cette reponse specifiquement
+  }
+
+  const formatChartData = (initialData) => {
+    // Cette fonction mets les donnees du portfolio dans le format que la librairie pour les graphiques en a besoin
+    /*
+    Exemple de donnees:
+    const data = [
+        { time: '2019-04-11', value: 80.01 },
+        { time: '2019-04-12', value: 96.63 },
+    ]
+    */
+    console.log(initialData)
+    let data1 = []
+    let months = [
+      'january',
+      'februrary',
+      'march',
+      'april',
+      'may',
+      'june',
+      'july',
+      'august',
+      'september',
+      'october',
+      'november',
+      'december',
+    ]
+    months.forEach((date) => {
+      const monthwise = initialData.monthWise
+      if (monthwise[date]) {
+        data1.push(monthwise[date].length)
+      } else {
+        data1.push(0)
+      }
+    })
+    console.log(months)
+    console.log(data1)
+    return {
+      labels: months,
+      datasets: [
+        {
+          label: 'Time spent in app',
+          data: data1,
+          backgroundColor: ['lightblue'],
+          borderWidth: 4,
+        },
+      ],
+    }
+  }
+
+  const chart = () => {
+    setTimeData({
+      labels: [
+        'january',
+        'februrary',
+        'march',
+        'april',
+        'may',
+        'june',
+        'july',
+        'august',
+        'september',
+        'october',
+        'november',
+        'december',
+      ],
+      datasets: [
+        {
+          label: 'Time spent in app',
+          data: [
+            1,
+            2,
+            3,
+            1,
+            'may',
+            'june',
+            'july',
+            'august',
+            'september',
+            'october',
+            'november',
+            'december',
+          ],
+          backgroundColor: ['lightblue'],
+          borderWidth: 4,
+        },
+      ],
+    })
+  }
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % completedTodos.length
@@ -51,7 +156,13 @@ const Todos = () => {
   useEffect(() => {
     if (status === 'not_loaded') {
       dispatch(fetchTodos())
+      dispatch(fetchStats())
     }
+    let formattedData = null
+    if (chartData.monthWise) {
+      formattedData = formatChartData(chartData)
+    }
+    setTimeData(formattedData)
     const endOffset = itemOffset + itemsPerPage
     console.log(`Loading completedTodos from ${itemOffset} to ${endOffset}`)
     setCurrentItems(completedTodos.slice(itemOffset, endOffset))
@@ -91,24 +202,37 @@ const Todos = () => {
             {isAdmin && (
               <>
                 <Form addTodo={(event, inputValue) => loadCommitHistory(event, inputValue)} />
-                <form className="box" onSubmit={(event) => handleSubmit(event)}>
-                  <label className="label is-large">Export excel</label>
-                  <div className="field has-addons">
-                    <div className="control">
-                      <input
-                        name="title"
-                        type="text"
-                        className="input"
-                        placeholder="What's your email?"
-                        onChange={handleChange}
-                        value={inputValue}
-                      />
+                <div className="box">
+                  <form onSubmit={(event) => handleSubmit(event)}>
+                    <label className="label is-large">Export excel</label>
+                    <div className="field has-addons">
+                      <div className="control">
+                        <input
+                          name="title"
+                          type="text"
+                          className="input"
+                          placeholder="What's your email?"
+                          onChange={handleChange}
+                          value={inputValue}
+                        />
+                      </div>
+                      <div className="control">
+                        <input type="submit" value="Add" className="button is-info" />
+                      </div>
                     </div>
-                    <div className="control">
-                      <input type="submit" value="Add" className="button is-info" />
+                  </form>
+                  {timeData && timeData.labels && timeData.labels.length > 0 && (
+                    <div className="charts-container">
+                      <div className="chart chart--time">
+                        <Bar
+                          data={timeData}
+                          height={200}
+                          options={{ maintainAspectRatio: false }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </form>
+                  )}
+                </div>
               </>
             )}
             <div className="box" id="messages" data-example>
@@ -117,7 +241,7 @@ const Todos = () => {
               <div className="list has-hoverable-list-completedTodos has-overflow-ellipsis">
                 {currentTodos && currentTodos.length > 0 && (
                   <>
-                    <TodoGrid completedTodos={currentTodos} />
+                    <TodoGrid completedTodos={currentTodos} isAdmin={isAdmin} />
                   </>
                 )}
               </div>
