@@ -50,14 +50,17 @@ const Navbar = () => {
         </div>
         <div className={`navbar-menu ${isActive ? 'is-active' : ''}`} id="navbarMenuMain">
           <div className="navbar-start">
+            <Link to={'/calendar'} className="navbar-item">
+              Calendar
+            </Link>
+            <Link to={'/movies'} className="navbar-item">
+              Movies
+            </Link>
             <Link to={'/shows'} className="navbar-item">
               Shows
             </Link>
             <Link to={'/books'} className="navbar-item">
               Books
-            </Link>
-            <Link to={'/movies'} className="navbar-item">
-              Movies
             </Link>
           </div>
 

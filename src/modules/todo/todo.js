@@ -233,7 +233,7 @@ const Todos = () => {
                   <div className="list has-hoverable-list-completedTodos has-overflow-ellipsis">
                     {events && events.length > 0 && (
                       <>
-                        <ItemGrid items={events} />
+                        <ItemGrid items={events.slice(0, 5)} />
                       </>
                     )}
                   </div>

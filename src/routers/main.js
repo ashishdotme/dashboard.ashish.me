@@ -13,6 +13,7 @@ import Movie from '../modules/movie/movie'
 import Books from '../modules/books/books'
 import Shows from '../modules/shows/shows'
 import Todo from '../modules/todo/todo'
+import Calendar from '../modules/calendar/calendar'
 import CoursesTable from '../modules/manage/courses/list'
 import UpdateCourse from '../modules/manage/courses/edit'
 import NewCourse from '../modules/manage/courses/create'
@@ -53,6 +54,7 @@ const MainRouter = (props) => {
               <Route path="/books" exact>
                 <Books />
               </Route>
+              <Route path="/calendar" component={Calendar} />
               <Route path="/access" component={Access} />
               <ProtectedRoute path="/admin/course" role="Professor" component={CoursesTable} />
             </Switch>
