@@ -107,7 +107,7 @@ const Todos = () => {
     if (movies && movies.length > 0) {
       movie = movies[0]
       recommendedMovies = await axios.get(
-        `http://recommenderapi-ashish.us-east-1.elasticbeanstalk.com/movies?q=${movies[0].title}`,
+        `https://systemapi.prod.ashish.me/movies/recommendations/${movies[0].title}`,
       )
     }
     setRecommendations({ movie, recommendedMovies: recommendedMovies.data })
@@ -287,33 +287,35 @@ const Todos = () => {
                 </div>
               </div>
             </div>
-            <div className="column">
-              <div className="box" id="messages" data-example>
-                <h1 className="title is-4 mb-2">
-                  Recommended Movies based on last movie you watched "
-                  {recommendations.movie && recommendations.movie.title}"
-                </h1>
+            {recommendations.recommendedMovies && recommendations.recommendedMovies.length > 0 && (
+              <div className="column">
+                <div className="box" id="messages" data-example>
+                  <h1 className="title is-4 mb-2">
+                    Recommended Movies based on last movie you watched "
+                    {recommendations.movie && recommendations.movie.title}"
+                  </h1>
 
-                <div className="list has-hoverable-list-completedTodos has-overflow-ellipsis">
-                  {recommendations.recommendedMovies &&
-                  recommendations.recommendedMovies.length > 0 ? (
-                    recommendations.recommendedMovies.slice(1, 6).map((item, index) => {
-                      return (
-                        <div className="list-item">
-                          <div className="list-item-content">
-                            <div className="list-item-title is-flex is-justify-content-space-between">
-                              {item}
+                  <div className="list has-hoverable-list-completedTodos has-overflow-ellipsis">
+                    {recommendations.recommendedMovies &&
+                    recommendations.recommendedMovies.length > 0 ? (
+                      recommendations.recommendedMovies.slice(1, 6).map((item, index) => {
+                        return (
+                          <div className="list-item">
+                            <div className="list-item-content">
+                              <div className="list-item-title is-flex is-justify-content-space-between">
+                                {item}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )
-                    })
-                  ) : (
-                    <p>No movies found</p>
-                  )}
+                        )
+                      })
+                    ) : (
+                      <p>No movies found</p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
