@@ -4,6 +4,7 @@ import showsReducer from './showsSlice'
 import movieReducer from './movieSlice'
 import todosReducer from './todosSlice'
 import booksReducer from './booksSlice'
+import timetableReducer from './timetablesSlice'
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     movies: movieReducer,
     todos: todosReducer,
     books: booksReducer,
+    timetables: timetableReducer,
   },
 })
 

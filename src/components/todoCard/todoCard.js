@@ -26,17 +26,25 @@ const TodoCard = ({ item, isAdmin }) => {
                 />
               )}
             </label>
-            {item.content}
-          </span>
-          <span className="has-text-weight-normal has-text-grey">
-            {' '}
-            {dayjs(item.dueDate).format('DD/MM/YYYY')}
+            {item.content ? item.content : item.event}
           </span>
         </div>
-        {item.completedDate && (
+        {item.todoId &&
+          (item.completedDate ? (
+            <div className="list-item-description">
+              Completed on&nbsp;
+              {dayjs(item.completedDate).format('DD MMM YYYY')}{' '}
+            </div>
+          ) : (
+            <div className="list-item-description">
+              Added on&nbsp;
+              {dayjs(item.dueDate).format('DD MMM YYYY')}{' '}
+            </div>
+          ))}
+        {item.eventDate && (
           <div className="list-item-description">
-            Completed on&nbsp;
-            {dayjs(item.completedDate).format('DD/MM/YYYY')}{' '}
+            Added on&nbsp;
+            {dayjs(item.eventDate).format('DD MMM')}
           </div>
         )}
       </div>
