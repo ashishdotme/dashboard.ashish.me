@@ -26,7 +26,7 @@ const Books = () => {
   return (
     <>
       <div className="custom-container">
-        <section className="hero is-info">
+        <section className="hero main-hero is-info">
           <div className="hero-body">
             <p className="title">Books</p>
             <p className="subtitle">dashboard.ashish.me</p>

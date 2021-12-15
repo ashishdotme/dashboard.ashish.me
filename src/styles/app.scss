@@ -31,10 +31,8 @@ $custom-padding-navbar: $navbar-height;
   height: 100px;
 }
 
-.hero {
-  .is-info {
-    background: #36D1DC;
-    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
-    background: linear-gradient(to right, #5B86E5, #36D1DC);
-  }
+.main-hero {
+  background: #36D1DC;
+  background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);
+  background: linear-gradient(to right, #5B86E5, #36D1DC);
 }

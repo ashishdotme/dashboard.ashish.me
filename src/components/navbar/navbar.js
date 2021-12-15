@@ -70,7 +70,7 @@ const Navbar = () => {
                 Login
               </a>
             )}
-            {isAuthenticated && (
+            {/* {isAuthenticated && (
               <div className="navbar-item has-dropdown is-hoverable">
                 <div className="navbar-link">Admin</div>
 
@@ -96,7 +96,7 @@ const Navbar = () => {
                   </Link>
                 </div>
               </div>
-            )}
+            )} */}
             {isAuthenticated && (
               <a
                 className="navbar-item"

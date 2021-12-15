@@ -133,7 +133,7 @@ const Todos = () => {
   return (
     <>
       <div className="custom-container">
-        <section className="hero is-info">
+        <section className="hero is-info main-hero">
           <div className="hero-body">
             <p className="title">Welcome Ashish Patel!</p>
             <p className="subtitle">dashboard.ashish.me</p>

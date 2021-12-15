@@ -27,7 +27,7 @@ const Shows = () => {
   return (
     <>
       <div className="custom-container">
-        <section className="hero is-info">
+        <section className="main-hero hero is-info">
           <div className="hero-body">
             <p className="title">Shows</p>
             <p className="subtitle">dashboard.ashish.me</p>

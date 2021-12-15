@@ -36,7 +36,7 @@ const MainRouter = (props) => {
               <Route path="/" exact>
                 <Todo />
               </Route>
-              <Route path="/courses" exact>
+              {/* <Route path="/courses" exact>
                 <IndexPage />
               </Route>
               <Route path="/course/:id/edit">
@@ -44,7 +44,7 @@ const MainRouter = (props) => {
               </Route>
               <Route path="/create/course" exact>
                 <NewCourse />
-              </Route>
+              </Route> */}
               <Route path="/movies" exact>
                 <Movie />
               </Route>
@@ -56,7 +56,7 @@ const MainRouter = (props) => {
               </Route>
               <Route path="/calendar" component={Calendar} />
               <Route path="/access" component={Access} />
-              <ProtectedRoute path="/admin/course" role="Professor" component={CoursesTable} />
+              {/* <ProtectedRoute path="/admin/course" role="Professor" component={CoursesTable} /> */}
             </Switch>
           </div>
         </section>
