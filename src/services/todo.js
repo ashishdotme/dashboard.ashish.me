@@ -68,7 +68,7 @@ export const exportData = (a) => {
 
 export const httpGetStats = () => {
   return api()
-    .get('/stats')
+    .get('/todos/stats')
     .then((res) => {
       return res.data || []
     })
