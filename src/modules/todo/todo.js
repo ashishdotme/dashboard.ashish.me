@@ -43,7 +43,7 @@ const Todos = () => {
   const [currentItems, setCurrentItems] = useState(null)
   const [pageCount, setPageCount] = useState(0)
   const [itemOffset, setItemOffset] = useState(0)
-  const [timeData, setTimeData] = useState({})
+  const [recommendations, setRecommendations] = useState({})
 
   const formatChartData = (initialData) => {
     let data1 = []
@@ -99,12 +99,28 @@ const Todos = () => {
     }
   }
 
+  const getRecommendations = async () => {
+    let recommendedMovies = []
+    let movie = {}
+    const moviesResponse = await axios.get('https://systemapi.prod.ashish.me/movies')
+    const movies = moviesResponse.data
+    if (movies && movies.length > 0) {
+      movie = movies[0]
+      recommendedMovies = await axios.get(
+        `http://recommenderapi-ashish.us-east-1.elasticbeanstalk.com/movies?q=${movies[0].title}`,
+      )
+    }
+    setRecommendations({ movie, recommendedMovies: recommendedMovies.data })
+    console.log({ movie, recommendedMovies: recommendedMovies.data })
+  }
+
   useEffect(() => {
     if (status === 'not_loaded') {
       dispatch(fetchTodos())
       dispatch(fetchStats())
       dispatch(fetchTimetables())
     }
+    getRecommendations()
     const endOffset = itemOffset + itemsPerPage
     console.log(`Loading completedTodos from ${itemOffset} to ${endOffset}`)
     setCurrentItems(completedTodos.slice(itemOffset, endOffset))
@@ -122,7 +138,6 @@ const Todos = () => {
     exportData({ email: inputValue })
     setInputValue('')
   }
-
   const { user } = useAuth0()
   let isAdmin = false
   if (user && user['https://ncirl.me/role']) {
@@ -269,6 +284,33 @@ const Todos = () => {
                       </>
                     )}
                   </div>
+                </div>
+              </div>
+            </div>
+            <div className="column">
+              <div className="box" id="messages" data-example>
+                <h1 className="title is-4 mb-2">
+                  Recommended Movies based on last movie you watched "
+                  {recommendations.movie && recommendations.movie.title}"
+                </h1>
+
+                <div className="list has-hoverable-list-completedTodos has-overflow-ellipsis">
+                  {recommendations.recommendedMovies &&
+                  recommendations.recommendedMovies.length > 0 ? (
+                    recommendations.recommendedMovies.slice(1, 6).map((item, index) => {
+                      return (
+                        <div className="list-item">
+                          <div className="list-item-content">
+                            <div className="list-item-title is-flex is-justify-content-space-between">
+                              {item}
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })
+                  ) : (
+                    <p>No movies found</p>
+                  )}
                 </div>
               </div>
             </div>
