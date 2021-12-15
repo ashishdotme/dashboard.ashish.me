@@ -29,7 +29,7 @@ const Books = () => {
         <section className="hero is-info">
           <div className="hero-body">
             <p className="title">Books</p>
-            <p className="subtitle">find all books here</p>
+            <p className="subtitle">dashboard.ashish.me</p>
           </div>
         </section>
         <div className="section has-background-light p-5">

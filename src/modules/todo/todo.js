@@ -136,7 +136,7 @@ const Todos = () => {
         <section className="hero is-info">
           <div className="hero-body">
             <p className="title">Welcome Ashish Patel!</p>
-            <p className="subtitle">find all todos here</p>
+            <p className="subtitle">dashboard.ashish.me</p>
           </div>
         </section>
         <div className="section has-background-light p-5">
@@ -155,6 +155,36 @@ const Todos = () => {
                 )}
               </div>
             </div>
+            {chartData.monthWise && chartData.monthWise.january.length > 0 && (
+              <section className="info-tiles mb-5">
+                <div className="tile is-ancestor has-text-centered">
+                  <div className="tile is-parent">
+                    <article className="tile is-child box">
+                      <p className="title">{chartData.currentMonth.length}</p>
+                      <p className="subtitle has-text-grey-light">tasks completed this month</p>
+                    </article>
+                  </div>
+                  <div className="tile is-parent">
+                    <article className="tile is-child box">
+                      <p className="title">{chartData.previousMonth.length}</p>
+                      <p className="subtitle has-text-grey-light">tasks completed this month</p>
+                    </article>
+                  </div>
+                  <div className="tile is-parent">
+                    <article className="tile is-child box">
+                      <p className="title">{chartData.currentYear.length}</p>
+                      <p className="subtitle has-text-grey-light">tasks completed this year</p>
+                    </article>
+                  </div>
+                  <div className="tile is-parent">
+                    <article className="tile is-child box">
+                      <p className="title">{chartData.previousYear.length}</p>
+                      <p className="subtitle has-text-grey-light">tasks completed previous year</p>
+                    </article>
+                  </div>
+                </div>
+              </section>
+            )}
             <div className="box">
               {isAdmin && (
                 <form onSubmit={(event) => handleSubmit(event)}>
@@ -177,15 +207,17 @@ const Todos = () => {
                 </form>
               )}
               {chartData.monthWise && chartData.monthWise.january.length > 0 && (
-                <div className="charts-container">
-                  <div className="chart chart--time">
-                    <Bar
-                      data={formatChartData(chartData)}
-                      height={200}
-                      options={{ maintainAspectRatio: false }}
-                    />
+                <>
+                  <div className="charts-container">
+                    <div className="chart chart--time">
+                      <Bar
+                        data={formatChartData(chartData)}
+                        height={200}
+                        options={{ maintainAspectRatio: false }}
+                      />
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
             <div className="columns">

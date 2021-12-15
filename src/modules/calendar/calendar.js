@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useMemo } from 'react'
 
 import 'react-big-calendar/lib/sass/styles.scss'
-import { format, getDay, parse, set, startOfWeek } from 'date-fns'
+import { format, getDay, parse, set, startOfWeek, startOfDay, endOfDay } from 'date-fns'
 import { enUS } from 'date-fns/locale'
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar'
 import { fetchTimetables, selectAllTimetables } from '../../slices/timetablesSlice'
@@ -30,29 +30,61 @@ const Timetable = () => {
   const [maxHour, setMaxHour] = useState(20)
   const lectureEvents = events.map((item) => {
     const session = {}
-    session.start = new Date(item.eventDate)
-    session.end = new Date(item.eventDate)
-    session.title = item.name
-    session.type = item.type
+    session.start = startOfDay(new Date(item.eventDate))
+    session.end = endOfDay(new Date(item.eventDate))
+    session.title = item.event
+    session.type = item.category
+    session.allDay = true
     return session
   })
+  console.log(lectureEvents)
+  const eventStyleGetter = (event) => {
+    var eventColor = event.resource.eventColor
+    var reserved = event.resource.reserved
+    var style
+    if (!reserved) {
+      style = {
+        border: `2px solid ${eventColor}`,
+        backgroundColor: 'white',
+        color: 'black',
+        fontSize: '14px',
+      }
+    } else {
+      style = {
+        border: `2px solid ${eventColor}`,
+        backgroundColor: eventColor,
+        color: 'white',
+        fontSize: '14px',
+      }
+    }
+    return {
+      style: style,
+    }
+  }
   return (
-    <div className="container has-background-light custom-container">
-      <div className="content pt-4 pl-5">
-        <div className="title is-size-2">Timetable</div>
-        <div className="subtitle">MSc Cloud Computing</div>
-        <hr />
+    <div className="custom-container">
+      <section className="hero is-info">
+        <div className="hero-body">
+          <p className="title">Courses</p>
+          <p className="subtitle">dashboard.ashish.me</p>
+        </div>
+      </section>
+      <section className="section has-background-light p-5">
         {lectureEvents.length > 0 && (
-          <Calendar
-            style={{ height: '100vh' }}
-            localizer={localizer}
-            events={lectureEvents}
-            views={['month']}
-            defaultDate={new Date()}
-          />
+          <div className="box container">
+            <Calendar
+              startAccessor="start"
+              endAccessor="end"
+              style={{ height: '100vh' }}
+              localizer={localizer}
+              events={lectureEvents}
+              views={['month']}
+              defaultDate={new Date()}
+            />
+          </div>
         )}
         <hr />
-      </div>
+      </section>
     </div>
   )
 }

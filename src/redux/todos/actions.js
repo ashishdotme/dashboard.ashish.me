@@ -85,3 +85,15 @@ export const updateTodo = (id, a) => {
       .catch((e) => console.log(e))
   }
 }
+
+export const updateTodo = (id, a) => {
+  return function (dispatch) {
+    axios
+      .put('https://systemapi.prod.ashish.me/todos/' + id, a)
+      .then((res) => {
+        dispatch(todoUpdated())
+        dispatch(loadTodos())
+      })
+      .catch((e) => console.log(e))
+  }
+}

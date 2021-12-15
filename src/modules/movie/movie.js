@@ -28,8 +28,8 @@ const Movies = () => {
       <div className="custom-container">
         <section className="hero is-info">
           <div className="hero-body">
-            <p className="title">Moviess</p>
-            <p className="subtitle">find all movies here</p>
+            <p className="title">Movies</p>
+            <p className="subtitle">dashboard.ashish.me</p>
           </div>
         </section>
         <div className="section has-background-light p-5">

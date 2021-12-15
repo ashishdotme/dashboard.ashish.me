@@ -30,7 +30,7 @@ const Shows = () => {
         <section className="hero is-info">
           <div className="hero-body">
             <p className="title">Shows</p>
-            <p className="subtitle">find all shows here</p>
+            <p className="subtitle">dashboard.ashish.me</p>
           </div>
         </section>
         <div className="section has-background-light p-5">
