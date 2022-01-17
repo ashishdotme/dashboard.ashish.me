@@ -184,7 +184,7 @@ const Todos = () => {
                   <div className="tile is-parent">
                     <article className="tile is-child box">
                       <p className="title">{chartData.previousMonth.length}</p>
-                      <p className="subtitle has-text-grey-light">tasks completed this month</p>
+                      <p className="subtitle has-text-grey-light">tasks completed previous month</p>
                     </article>
                   </div>
                   <div className="tile is-parent">
