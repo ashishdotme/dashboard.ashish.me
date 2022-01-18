@@ -13,7 +13,7 @@ import { Chart } from 'react-chartjs-2'
 import { fetchTimetables, selectAllTimetables } from '../../slices/timetablesSlice'
 import { exportData } from '../../services/todo'
 import TodoCard from '../../components/todoCard/todoCard'
-import { Line, Bar } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import ReactPaginate from 'react-paginate'
 import { useAuth0 } from '@auth0/auth0-react'
 import Form from './form'
@@ -35,7 +35,6 @@ const Todos = () => {
   const todos = useSelector(selectAllTodos)
   const events = useSelector(selectAllTimetables)
   const chartData = useSelector((state) => state.todos.stats)
-  console.log(chartData)
   const currentTodos = todos.filter((x) => !x.completedDate)
   const completedTodos = todos.filter((x) => x.completedDate)
   let itemsPerPage = 6

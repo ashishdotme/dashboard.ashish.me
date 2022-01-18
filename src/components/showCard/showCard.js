@@ -16,8 +16,18 @@ const ShowCard = ({ item }) => {
               {item.description}
               <br />
               <br />
-              <b>Completed on: </b> {dayjs(item.completedDate).format('DD MMMM YYYY')}
-              <br />
+              {item.startedDate && (
+                <>
+                  <b>Started on: </b> {dayjs(item.startedDate).format('DD MMMM YYYY')}
+                  <br />
+                </>
+              )}
+              {item.completedDate && (
+                <>
+                  <b>Completed on: </b> {dayjs(item.completedDate).format('DD MMMM YYYY')}
+                  <br />
+                </>
+              )}
               <b>Genre: </b> {item.genre}
               <br />
               <b>Rating: </b> {item.imdbRating}

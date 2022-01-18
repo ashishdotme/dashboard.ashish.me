@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { fetchMovies, selectAllMovies } from '../../slices/movieSlice'
 import MovieCard from '../../components/movieCard/movieCard'
 import DatePicker from 'react-datepicker'
+import { useAuth0 } from '@auth0/auth0-react'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import axios from 'axios'
@@ -60,6 +61,13 @@ const Movies = () => {
       setErrorForm(null)
     }
   }
+  const { user } = useAuth0()
+  let isAdmin = false
+  if (user && user['https://ncirl.me/role']) {
+    const roles = user['https://ncirl.me/role']
+    const isAdminRolePresent = roles.find((x) => x === 'Admin')
+    isAdmin = isAdminRolePresent ? true : false
+  }
   return (
     <>
       <div className="custom-container">
@@ -70,74 +78,78 @@ const Movies = () => {
           </div>
         </section>
         <div className="section has-background-light p-5">
-          <form className={'form mb-5'} onSubmit={handleSubmitCreate}>
-            <fieldset className={'fieldset'}>
-              <div className="columns">
-                <div className="column">
-                  <div className="field is-grouped has-addons">
-                    <div className="control is-expanded ">
-                      <input
-                        className="input is-fullwidth"
-                        type="text"
-                        title="title"
-                        placeholder="Enter title"
-                        value={title}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                    {!newMovie.isRandom && (
-                      <div className="mr-3">
-                        <DatePicker
-                          placeholderText="Enter date"
-                          className="input"
-                          selected={date}
-                          onChange={(date) => handleInputChange({ type: 'date', date }, true)}
-                        />
-                      </div>
-                    )}
-                    {newMovie.isRandom && (
-                      <div className="mr-3">
-                        <DatePicker
-                          placeholderText="Enter start date"
-                          className="input"
-                          selected={startDate}
-                          onChange={(date) => handleInputChange({ type: 'startDate', date }, true)}
-                        />
-                      </div>
-                    )}
-                    {newMovie.isRandom && (
-                      <div className="mr-3">
-                        <DatePicker
-                          placeholderText="Enter end date"
-                          className="input"
-                          selected={endDate}
-                          onChange={(date) => handleInputChange({ type: 'endDate', date }, true)}
-                        />
-                      </div>
-                    )}
-                    <div className="mr-3">
-                      <label className="checkbox">
+          {isAdmin && (
+            <form className={'form mb-5'} onSubmit={handleSubmitCreate}>
+              <fieldset className={'fieldset'}>
+                <div className="columns">
+                  <div className="column">
+                    <div className="field is-grouped has-addons">
+                      <div className="control is-expanded ">
                         <input
-                          title="isRandom"
-                          type="checkbox"
-                          checked={isRandom}
+                          className="input is-fullwidth"
+                          type="text"
+                          title="title"
+                          placeholder="Enter title"
+                          value={title}
                           onChange={handleInputChange}
                         />
-                        &ensp; Generate Random <br></br>date
-                      </label>
-                    </div>
-                    <div className="control">
-                      <button type="submit" className={'button'}>
-                        Submit
-                      </button>
+                      </div>
+                      {!newMovie.isRandom && (
+                        <div className="mr-3">
+                          <DatePicker
+                            placeholderText="Enter date"
+                            className="input"
+                            selected={date}
+                            onChange={(date) => handleInputChange({ type: 'date', date }, true)}
+                          />
+                        </div>
+                      )}
+                      {newMovie.isRandom && (
+                        <div className="mr-3">
+                          <DatePicker
+                            placeholderText="Enter start date"
+                            className="input"
+                            selected={startDate}
+                            onChange={(date) =>
+                              handleInputChange({ type: 'startDate', date }, true)
+                            }
+                          />
+                        </div>
+                      )}
+                      {newMovie.isRandom && (
+                        <div className="mr-3">
+                          <DatePicker
+                            placeholderText="Enter end date"
+                            className="input"
+                            selected={endDate}
+                            onChange={(date) => handleInputChange({ type: 'endDate', date }, true)}
+                          />
+                        </div>
+                      )}
+                      <div className="mr-3">
+                        <label className="checkbox">
+                          <input
+                            title="isRandom"
+                            type="checkbox"
+                            checked={isRandom}
+                            onChange={handleInputChange}
+                          />
+                          &ensp; Generate Random <br></br>date
+                        </label>
+                      </div>
+                      <div className="control">
+                        <button type="submit" className={'button'}>
+                          Submit
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {errorForm ? <div className={'info'}>{errorForm}</div> : null}
-            </fieldset>
-          </form>
+                {errorForm ? <div className={'info'}>{errorForm}</div> : null}
+              </fieldset>
+            </form>
+          )}
           <div className="columns is-multiline">
             <MovieGrid items={movies} />
           </div>
