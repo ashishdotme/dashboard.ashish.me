@@ -101,12 +101,12 @@ const Todos = () => {
   const getRecommendations = async () => {
     let recommendedMovies = []
     let movie = {}
-    const moviesResponse = await axios.get('https://systemapi.prod.ashish.me/movies')
+    const moviesResponse = await axios.get('https://api.ashish.me/movies')
     const movies = moviesResponse.data
     if (movies && movies.length > 0) {
       movie = movies[0]
       recommendedMovies = await axios.get(
-        `https://systemapi.prod.ashish.me/movies/recommendations/${movies[0].title}`,
+        `https://api.ashish.me/movies/recommendations/${movies[0].title}`,
       )
     }
     setRecommendations({ movie, recommendedMovies: recommendedMovies.data })

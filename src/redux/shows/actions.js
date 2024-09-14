@@ -26,7 +26,7 @@ const showUpdated = () => ({
 export const loadShows = () => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/shows')
+      .get('https://api.ashish.me/shows')
       .then((res) => {
         dispatch(getShows(res.data))
       })
@@ -37,7 +37,7 @@ export const loadShows = () => {
 export const deleteShow = (id) => {
   return function (dispatch) {
     axios
-      .delete('https://systemapi.prod.ashish.me/shows/' + id)
+      .delete('https://api.ashish.me/shows/' + id)
       .then((res) => {
         dispatch(showDeleted())
         dispatch(loadShows())
@@ -49,7 +49,7 @@ export const deleteShow = (id) => {
 export const addShow = (a) => {
   return function (dispatch) {
     axios
-      .post('https://systemapi.prod.ashish.me/shows', a)
+      .post('https://api.ashish.me/shows', a)
       .then((res) => {
         dispatch(showAdded())
         dispatch(loadShows())
@@ -61,7 +61,7 @@ export const addShow = (a) => {
 export const getOneShow = (id) => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/shows/' + id)
+      .get('https://api.ashish.me/shows/' + id)
       .then((res) => {
         dispatch(getShow(res.data))
       })
@@ -72,7 +72,7 @@ export const getOneShow = (id) => {
 export const updateShow = (id, a) => {
   return function (dispatch) {
     axios
-      .put('https://systemapi.prod.ashish.me/shows/' + id, a)
+      .put('https://api.ashish.me/shows/' + id, a)
       .then((res) => {
         dispatch(showUpdated())
         dispatch(loadShows())

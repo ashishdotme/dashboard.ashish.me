@@ -26,7 +26,7 @@ const courseUpdated = () => ({
 export const loadCourses = () => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/courses')
+      .get('https://api.ashish.me/courses')
       .then((res) => {
         dispatch(getCourses(res.data))
       })
@@ -37,7 +37,7 @@ export const loadCourses = () => {
 export const deleteCourse = (id) => {
   return function (dispatch) {
     axios
-      .delete('https://systemapi.prod.ashish.me/courses/' + id)
+      .delete('https://api.ashish.me/courses/' + id)
       .then((res) => {
         dispatch(courseDeleted())
         dispatch(loadCourses())
@@ -49,7 +49,7 @@ export const deleteCourse = (id) => {
 export const addCourse = (a) => {
   return function (dispatch) {
     axios
-      .post('https://systemapi.prod.ashish.me/courses', a)
+      .post('https://api.ashish.me/courses', a)
       .then((res) => {
         dispatch(courseAdded())
         dispatch(loadCourses())
@@ -61,7 +61,7 @@ export const addCourse = (a) => {
 export const getOneCourse = (id) => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/courses/' + id)
+      .get('https://api.ashish.me/courses/' + id)
       .then((res) => {
         dispatch(getCourse(res.data))
       })
@@ -72,7 +72,7 @@ export const getOneCourse = (id) => {
 export const updateCourse = (id, a) => {
   return function (dispatch) {
     axios
-      .put('https://systemapi.prod.ashish.me/courses/' + id, a)
+      .put('https://api.ashish.me/courses/' + id, a)
       .then((res) => {
         dispatch(courseUpdated())
         dispatch(loadCourses())

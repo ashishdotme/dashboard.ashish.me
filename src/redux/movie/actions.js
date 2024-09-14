@@ -26,7 +26,7 @@ const movieUpdated = () => ({
 export const loadMovies = () => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/movies')
+      .get('https://api.ashish.me/movies')
       .then((res) => {
         dispatch(getMovies(res.data))
       })
@@ -37,7 +37,7 @@ export const loadMovies = () => {
 export const deleteMovie = (id) => {
   return function (dispatch) {
     axios
-      .delete('https://systemapi.prod.ashish.me/movies/' + id)
+      .delete('https://api.ashish.me/movies/' + id)
       .then((res) => {
         dispatch(movieDeleted())
         dispatch(loadMovies())
@@ -49,7 +49,7 @@ export const deleteMovie = (id) => {
 export const addMovie = (a) => {
   return function (dispatch) {
     axios
-      .post('https://systemapi.prod.ashish.me/movies', a)
+      .post('https://api.ashish.me/movies', a)
       .then((res) => {
         dispatch(movieAdded())
         dispatch(loadMovies())
@@ -61,7 +61,7 @@ export const addMovie = (a) => {
 export const getOneMovie = (id) => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/movies/' + id)
+      .get('https://api.ashish.me/movies/' + id)
       .then((res) => {
         dispatch(getMovie(res.data))
       })
@@ -72,7 +72,7 @@ export const getOneMovie = (id) => {
 export const updateMovie = (id, a) => {
   return function (dispatch) {
     axios
-      .put('https://systemapi.prod.ashish.me/movies/' + id, a)
+      .put('https://api.ashish.me/movies/' + id, a)
       .then((res) => {
         dispatch(movieUpdated())
         dispatch(loadMovies())

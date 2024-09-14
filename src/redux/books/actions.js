@@ -26,7 +26,7 @@ const bookUpdated = () => ({
 export const loadBooks = () => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/books')
+      .get('https://api.ashish.me/books')
       .then((res) => {
         dispatch(getBooks(res.data))
       })
@@ -37,7 +37,7 @@ export const loadBooks = () => {
 export const deleteBook = (id) => {
   return function (dispatch) {
     axios
-      .delete('https://systemapi.prod.ashish.me/books/' + id)
+      .delete('https://api.ashish.me/books/' + id)
       .then((res) => {
         dispatch(bookDeleted())
         dispatch(loadBooks())
@@ -49,7 +49,7 @@ export const deleteBook = (id) => {
 export const addBook = (a) => {
   return function (dispatch) {
     axios
-      .post('https://systemapi.prod.ashish.me/books', a)
+      .post('https://api.ashish.me/books', a)
       .then((res) => {
         dispatch(bookAdded())
         dispatch(loadBooks())
@@ -61,7 +61,7 @@ export const addBook = (a) => {
 export const getOneBook = (id) => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/books/' + id)
+      .get('https://api.ashish.me/books/' + id)
       .then((res) => {
         dispatch(getBook(res.data))
       })
@@ -72,7 +72,7 @@ export const getOneBook = (id) => {
 export const updateBook = (id, a) => {
   return function (dispatch) {
     axios
-      .put('https://systemapi.prod.ashish.me/books/' + id, a)
+      .put('https://api.ashish.me/books/' + id, a)
       .then((res) => {
         dispatch(bookUpdated())
         dispatch(loadBooks())

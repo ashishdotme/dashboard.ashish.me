@@ -31,7 +31,7 @@ const todoUpdated = () => ({
 export const loadTodos = () => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/todos')
+      .get('https://api.ashish.me/todos')
       .then((res) => {
         dispatch(getTodos(res.data))
       })
@@ -42,7 +42,7 @@ export const loadTodos = () => {
 export const deleteTodo = (id) => {
   return function (dispatch) {
     axios
-      .delete('https://systemapi.prod.ashish.me/todos/' + id)
+      .delete('https://api.ashish.me/todos/' + id)
       .then((res) => {
         dispatch(todoDeleted())
         dispatch(loadTodos())
@@ -54,7 +54,7 @@ export const deleteTodo = (id) => {
 export const addTodo = (a) => {
   return function (dispatch) {
     axios
-      .post('https://systemapi.prod.ashish.me/todos', a)
+      .post('https://api.ashish.me/todos', a)
       .then((res) => {
         dispatch(todoAdded())
         dispatch(loadTodos())
@@ -66,7 +66,7 @@ export const addTodo = (a) => {
 export const getOneTodo = (id) => {
   return function (dispatch) {
     axios
-      .get('https://systemapi.prod.ashish.me/todos/' + id)
+      .get('https://api.ashish.me/todos/' + id)
       .then((res) => {
         dispatch(getTodo(res.data))
       })
@@ -77,7 +77,7 @@ export const getOneTodo = (id) => {
 export const updateTodo = (id, a) => {
   return function (dispatch) {
     axios
-      .put('https://systemapi.prod.ashish.me/todos/' + id, a)
+      .put('https://api.ashish.me/todos/' + id, a)
       .then((res) => {
         dispatch(todoUpdated())
         dispatch(loadTodos())
@@ -89,7 +89,7 @@ export const updateTodo = (id, a) => {
 export const updateTodo = (id, a) => {
   return function (dispatch) {
     axios
-      .put('https://systemapi.prod.ashish.me/todos/' + id, a)
+      .put('https://api.ashish.me/todos/' + id, a)
       .then((res) => {
         dispatch(todoUpdated())
         dispatch(loadTodos())

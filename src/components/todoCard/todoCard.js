@@ -19,7 +19,7 @@ const TodoCard = ({ item, isAdmin }) => {
                   onChange={async () => {
                     if (!item.completed) {
                       await axios.post(
-                        `https://systemapi.prod.ashish.me/todos/${item.id}/completed/${item.todoId}`,
+                        `https://api.ashish.me/todos/${item.id}/completed/${item.todoId}`,
                       )
                       dispatch(fetchTodos())
                       dispatch(fetchStats())

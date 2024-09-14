@@ -1,2 +1,2 @@
-const baseUrl = 'https://systemapi.prod.ashish.me'
+const baseUrl = 'https://api.ashish.me'
 export default baseUrl
